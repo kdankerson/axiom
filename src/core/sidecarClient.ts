@@ -14,3 +14,8 @@ export async function sidecarFetch(path: string, init?: RequestInit): Promise<Re
   const base = await sidecarBaseUrl();
   return fetch(`${base}${path}`, init);
 }
+
+export async function sidecarWsUrl(path: string): Promise<string> {
+  const base = await sidecarBaseUrl();
+  return `${base.replace(/^http/, "ws")}${path}`;
+}

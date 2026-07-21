@@ -1,0 +1,11 @@
+{
+  "id": "chat",
+  "name": "Chat",
+  "icon": "message-circle",
+  "route": "/chat",
+  "version": "0.1.0",
+  "frontend": { "entry": "frontend/index.tsx" },
+  "backend": { "enabled": true, "router": "backend/router.py", "prefix": "/api/chat" },
+  "nav": { "order": 5, "placeholder": false, "enabled": true },
+  "capabilities": ["voice-input", "voice-output", "streaming"]
+}
