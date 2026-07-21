@@ -143,3 +143,65 @@ input {
 .axiom-chat-input input {
   flex: 1;
 }
+
+.axiom-agents {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.axiom-agents-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.axiom-agents-input input {
+  flex: 1;
+}
+
+.axiom-agents-log {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.axiom-agents-text {
+  margin: 0;
+}
+
+.axiom-agents-tool {
+  border: 1px solid #2a3752;
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  background-color: #0d1220;
+}
+
+.axiom-agents-tool summary {
+  cursor: pointer;
+  color: #9fb3d9;
+  font-size: 0.9rem;
+}
+
+.axiom-agents-tool pre {
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+  color: #9fb3d9;
+  margin: 0.4rem 0 0;
+}
+
+.axiom-agents-tool-error {
+  color: #ff8080;
+}
+
+.axiom-agents-final {
+  border-left: 3px solid #4dd0e1;
+  padding-left: 0.8rem;
+  font-weight: 500;
+}
+
+.axiom-agents-error {
+  color: #ff8080;
+}

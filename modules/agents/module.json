@@ -1,0 +1,11 @@
+{
+  "id": "agents",
+  "name": "Agents",
+  "icon": "bot",
+  "route": "/agents",
+  "version": "0.1.0",
+  "frontend": { "entry": "frontend/index.tsx" },
+  "backend": { "enabled": true, "router": "backend/router.py", "prefix": "/api/agents" },
+  "nav": { "order": 15, "placeholder": false, "enabled": true },
+  "capabilities": ["streaming"]
+}

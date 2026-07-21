@@ -38,14 +38,21 @@ async def stream_query(
         stderr=asyncio.subprocess.PIPE,
     )
 
-    assert proc.stdout is not None
-    async for raw in proc.stdout:
-        line = raw.decode("utf-8", errors="replace").strip()
-        if not line:
-            continue
-        try:
-            yield json.loads(line)
-        except json.JSONDecodeError:
-            continue
+    try:
+        assert proc.stdout is not None
+        async for raw in proc.stdout:
+            line = raw.decode("utf-8", errors="replace").strip()
+            if not line:
+                continue
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError:
+                continue
 
-    await proc.wait()
+        await proc.wait()
+    finally:
+        # If the consumer stops early (e.g. a disconnected WebSocket closes
+        # this generator), don't leave the CLI process running.
+        if proc.returncode is None:
+            proc.kill()
+            await proc.wait()
