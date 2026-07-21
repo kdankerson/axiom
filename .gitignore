@@ -33,4 +33,8 @@ sidecar/dist
 # Rust / Tauri
 src-tauri/target
 src-tauri/gen
-src-tauri/sidecar-bin
+# Tracked as a placeholder (.gitkeep) so `cargo build`/`tauri dev` succeeds
+# even before scripts/build-sidecar.ps1 has run once — bundle.resources
+# existence is validated at build time regardless of dev/release profile.
+src-tauri/sidecar-bin/*
+!src-tauri/sidecar-bin/.gitkeep
