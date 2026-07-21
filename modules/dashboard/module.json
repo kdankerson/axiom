@@ -1,0 +1,11 @@
+{
+  "id": "dashboard",
+  "name": "Dashboard",
+  "icon": "layout-dashboard",
+  "route": "/dashboard",
+  "version": "0.1.0",
+  "frontend": { "entry": "frontend/index.tsx" },
+  "backend": { "enabled": true, "router": "backend/router.py", "prefix": "/api/dashboard" },
+  "nav": { "order": 10, "placeholder": false, "enabled": true },
+  "capabilities": []
+}
