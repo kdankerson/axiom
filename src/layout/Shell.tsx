@@ -1,29 +1,29 @@
-import { useState } from "react";
+import { Suspense } from "react";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
-import { sidecarFetch } from "../core/sidecarClient";
+import { discoverModules } from "../core/moduleRegistry";
+import { Home } from "./Home";
+
+const modules = discoverModules();
 
 export function Shell() {
-  const [status, setStatus] = useState<string>("not checked");
-
-  async function ping() {
-    setStatus("checking...");
-    try {
-      const res = await sidecarFetch("/health");
-      const body = await res.json();
-      setStatus(`sidecar: ${body.status}`);
-    } catch (err) {
-      setStatus(`error: ${(err as Error).message}`);
-    }
-  }
-
   return (
-    <div className="axiom-shell">
-      <Sidebar />
-      <main className="axiom-main">
-        <h1>AXIOM</h1>
-        <button onClick={ping}>Ping sidecar</button>
-        <p>{status}</p>
-      </main>
-    </div>
+    <HashRouter>
+      <div className="axiom-shell">
+        <Sidebar modules={modules} />
+        <main className="axiom-main">
+          <Suspense fallback={<p>Loading...</p>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              {modules
+                .filter((m) => m.Component && m.manifest.route)
+                .map(({ manifest, Component }) => (
+                  <Route key={manifest.id} path={manifest.route} element={Component && <Component />} />
+                ))}
+            </Routes>
+          </Suspense>
+        </main>
+      </div>
+    </HashRouter>
   );
 }
