@@ -12,9 +12,12 @@ const sidecar = spawn(venvPython, ["sidecar/main.py"], {
   stdio: "inherit",
 });
 
+// Windows can't CreateProcess a .cmd file directly — it has to go through a
+// shell. Without this, spawn() fails with EINVAL (or ENOENT on older Node).
 const tauri = spawn(isWin ? "npm.cmd" : "npm", ["run", "tauri", "--", "dev"], {
   cwd: root,
   stdio: "inherit",
+  shell: isWin,
 });
 
 let shuttingDown = false;
