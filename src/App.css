@@ -1,12 +1,25 @@
 :root {
+  /* HUD theme tokens — swap these to re-theme the whole app */
+  --axiom-bg: #0a0e14;
+  --axiom-surface: #0d1220;
+  --axiom-surface-alt: #131a2b;
+  --axiom-surface-user: #16324a;
+  --axiom-border: #2a3752;
+  --axiom-border-subtle: #1b2438;
+  --axiom-text: #d6e4ff;
+  --axiom-text-muted: #9fb3d9;
+  --axiom-text-disabled: #3d4a63;
+  --axiom-accent: #4dd0e1;
+  --axiom-error: #ff8080;
+
   font-family: "Segoe UI", Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
   color-scheme: dark;
 
-  color: #d6e4ff;
-  background-color: #0a0e14;
+  color: var(--axiom-text);
+  background-color: var(--axiom-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,15 +43,15 @@ body,
 .axiom-sidebar {
   width: 220px;
   flex-shrink: 0;
-  background-color: #0d1220;
-  border-right: 1px solid #1b2438;
+  background-color: var(--axiom-surface);
+  border-right: 1px solid var(--axiom-border-subtle);
   padding: 1rem;
 }
 
 .axiom-sidebar-brand {
   font-weight: 600;
   letter-spacing: 0.2em;
-  color: #4dd0e1;
+  color: var(--axiom-accent);
   margin-bottom: 1rem;
 }
 
@@ -47,23 +60,23 @@ body,
   padding: 0.5rem 0.6rem;
   margin: 0.15rem 0;
   border-radius: 6px;
-  color: #9fb3d9;
+  color: var(--axiom-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
 }
 
 .axiom-nav-slot:hover {
-  background-color: #131a2b;
-  color: #d6e4ff;
+  background-color: var(--axiom-surface-alt);
+  color: var(--axiom-text);
 }
 
 .axiom-nav-slot-active {
-  background-color: #131a2b;
-  color: #4dd0e1;
+  background-color: var(--axiom-surface-alt);
+  color: var(--axiom-accent);
 }
 
 .axiom-nav-slot-disabled {
-  color: #3d4a63;
+  color: var(--axiom-text-disabled);
   cursor: default;
 }
 
@@ -74,28 +87,37 @@ body,
 
 button {
   border-radius: 6px;
-  border: 1px solid #2a3752;
+  border: 1px solid var(--axiom-border);
   padding: 0.5em 1.1em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #d6e4ff;
-  background-color: #131a2b;
+  color: var(--axiom-text);
+  background-color: var(--axiom-surface-alt);
   cursor: pointer;
 }
 
 button:hover {
-  border-color: #4dd0e1;
+  border-color: var(--axiom-accent);
+}
+
+button:disabled {
+  color: var(--axiom-text-disabled);
+  cursor: default;
+}
+
+button:disabled:hover {
+  border-color: var(--axiom-border);
 }
 
 input {
   border-radius: 6px;
-  border: 1px solid #2a3752;
+  border: 1px solid var(--axiom-border);
   padding: 0.5em 0.8em;
   font-size: 1em;
   font-family: inherit;
-  color: #d6e4ff;
-  background-color: #0d1220;
+  color: var(--axiom-text);
+  background-color: var(--axiom-surface);
 }
 
 .axiom-chat {
@@ -122,16 +144,16 @@ input {
 
 .axiom-chat-msg-user {
   align-self: flex-end;
-  background-color: #16324a;
+  background-color: var(--axiom-surface-user);
 }
 
 .axiom-chat-msg-assistant {
   align-self: flex-start;
-  background-color: #131a2b;
+  background-color: var(--axiom-surface-alt);
 }
 
 .axiom-chat-error {
-  color: #ff8080;
+  color: var(--axiom-error);
 }
 
 .axiom-chat-input {
@@ -173,35 +195,35 @@ input {
 }
 
 .axiom-agents-tool {
-  border: 1px solid #2a3752;
+  border: 1px solid var(--axiom-border);
   border-radius: 8px;
   padding: 0.5rem 0.7rem;
-  background-color: #0d1220;
+  background-color: var(--axiom-surface);
 }
 
 .axiom-agents-tool summary {
   cursor: pointer;
-  color: #9fb3d9;
+  color: var(--axiom-text-muted);
   font-size: 0.9rem;
 }
 
 .axiom-agents-tool pre {
   white-space: pre-wrap;
   font-size: 0.85rem;
-  color: #9fb3d9;
+  color: var(--axiom-text-muted);
   margin: 0.4rem 0 0;
 }
 
 .axiom-agents-tool-error {
-  color: #ff8080;
+  color: var(--axiom-error);
 }
 
 .axiom-agents-final {
-  border-left: 3px solid #4dd0e1;
+  border-left: 3px solid var(--axiom-accent);
   padding-left: 0.8rem;
   font-weight: 500;
 }
 
 .axiom-agents-error {
-  color: #ff8080;
+  color: var(--axiom-error);
 }

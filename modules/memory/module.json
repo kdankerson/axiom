@@ -1,0 +1,8 @@
+{
+  "id": "memory",
+  "name": "Memory",
+  "icon": "database",
+  "version": "0.1.0",
+  "nav": { "order": 90, "placeholder": true, "enabled": false },
+  "note": "Coming soon"
+}
