@@ -1,0 +1,63 @@
+:root {
+  font-family: "Segoe UI", Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: dark;
+
+  color: #d6e4ff;
+  background-color: #0a0e14;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.axiom-shell {
+  display: flex;
+  height: 100vh;
+}
+
+.axiom-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background-color: #0d1220;
+  border-right: 1px solid #1b2438;
+  padding: 1rem;
+}
+
+.axiom-sidebar-brand {
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #4dd0e1;
+}
+
+.axiom-main {
+  flex: 1;
+  padding: 2rem;
+}
+
+button {
+  border-radius: 6px;
+  border: 1px solid #2a3752;
+  padding: 0.5em 1.1em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #d6e4ff;
+  background-color: #131a2b;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #4dd0e1;
+}
