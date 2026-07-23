@@ -10,7 +10,16 @@
   --axiom-text-muted: #9fb3d9;
   --axiom-text-disabled: #3d4a63;
   --axiom-accent: #4dd0e1;
+  --axiom-accent-soft: #8ce3ee;
   --axiom-error: #ff8080;
+
+  /* Depth/glow tokens for the theme pass — layered on top of the flat
+     surface colors above rather than replacing them. */
+  --axiom-glow: rgba(77, 208, 225, 0.32);
+  --axiom-glow-strong: rgba(77, 208, 225, 0.55);
+  --axiom-glow-error: rgba(255, 128, 128, 0.4);
+  --axiom-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --axiom-surface-grad: linear-gradient(160deg, var(--axiom-surface-alt) 0%, var(--axiom-surface) 100%);
 
   font-family: "Segoe UI", Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -19,7 +28,6 @@
   color-scheme: dark;
 
   color: var(--axiom-text);
-  background-color: var(--axiom-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,6 +43,16 @@ body,
   margin: 0;
 }
 
+body {
+  /* Vignette in the sidebar/mascot's corner rather than dead-center, so the
+     glow reads as coming from the pet instead of a generic page background —
+     echoes the radial-gradient treatment from the original voice prototype. */
+  background:
+    radial-gradient(circle at 10% 6%, rgba(77, 208, 225, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(77, 208, 225, 0.04) 0%, transparent 60%),
+    var(--axiom-bg);
+}
+
 .axiom-shell {
   display: flex;
   height: 100vh;
@@ -43,15 +61,19 @@ body,
 .axiom-sidebar {
   width: 220px;
   flex-shrink: 0;
-  background-color: var(--axiom-surface);
+  background: var(--axiom-surface-grad);
   border-right: 1px solid var(--axiom-border-subtle);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .axiom-sidebar-brand {
   font-weight: 600;
   letter-spacing: 0.2em;
   color: var(--axiom-accent);
+  text-shadow: 0 0 12px var(--axiom-glow);
   margin-bottom: 1rem;
 }
 
@@ -60,9 +82,11 @@ body,
   padding: 0.5rem 0.6rem;
   margin: 0.15rem 0;
   border-radius: 6px;
+  border-left: 2px solid transparent;
   color: var(--axiom-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
 .axiom-nav-slot:hover {
@@ -72,7 +96,9 @@ body,
 
 .axiom-nav-slot-active {
   background-color: var(--axiom-surface-alt);
+  border-left-color: var(--axiom-accent);
   color: var(--axiom-accent);
+  box-shadow: inset 0 0 20px rgba(77, 208, 225, 0.08);
 }
 
 .axiom-nav-slot-disabled {
@@ -83,6 +109,7 @@ body,
 .axiom-main {
   flex: 1;
   padding: 2rem;
+  overflow-y: auto;
 }
 
 button {
@@ -93,21 +120,30 @@ button {
   font-weight: 500;
   font-family: inherit;
   color: var(--axiom-text);
-  background-color: var(--axiom-surface-alt);
+  background: var(--axiom-surface-grad);
+  box-shadow: var(--axiom-shadow);
   cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
 }
 
 button:hover {
   border-color: var(--axiom-accent);
+  box-shadow: var(--axiom-shadow), 0 0 14px var(--axiom-glow);
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 button:disabled {
   color: var(--axiom-text-disabled);
   cursor: default;
+  box-shadow: none;
 }
 
 button:disabled:hover {
   border-color: var(--axiom-border);
+  box-shadow: none;
 }
 
 input {
@@ -118,6 +154,13 @@ input {
   font-family: inherit;
   color: var(--axiom-text);
   background-color: var(--axiom-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--axiom-accent);
+  box-shadow: 0 0 0 3px rgba(77, 208, 225, 0.15);
 }
 
 .axiom-chat {
@@ -140,16 +183,17 @@ input {
   padding: 0.5rem 0.8rem;
   border-radius: 10px;
   white-space: pre-wrap;
+  box-shadow: var(--axiom-shadow);
 }
 
 .axiom-chat-msg-user {
   align-self: flex-end;
-  background-color: var(--axiom-surface-user);
+  background: linear-gradient(160deg, var(--axiom-surface-user) 0%, #10233a 100%);
 }
 
 .axiom-chat-msg-assistant {
   align-self: flex-start;
-  background-color: var(--axiom-surface-alt);
+  background: var(--axiom-surface-grad);
 }
 
 .axiom-chat-error {
@@ -198,7 +242,8 @@ input {
   border: 1px solid var(--axiom-border);
   border-radius: 8px;
   padding: 0.5rem 0.7rem;
-  background-color: var(--axiom-surface);
+  background: var(--axiom-surface-grad);
+  box-shadow: var(--axiom-shadow);
 }
 
 .axiom-agents-tool summary {
@@ -222,6 +267,7 @@ input {
   border-left: 3px solid var(--axiom-accent);
   padding-left: 0.8rem;
   font-weight: 500;
+  box-shadow: -6px 0 16px -10px var(--axiom-glow-strong);
 }
 
 .axiom-agents-error {
@@ -247,6 +293,7 @@ input {
 .axiom-tab-active {
   border-color: var(--axiom-accent);
   color: var(--axiom-accent);
+  box-shadow: var(--axiom-shadow), 0 0 14px var(--axiom-glow);
 }
 
 .axiom-memory-history {
@@ -279,8 +326,15 @@ input {
   border: 1px solid var(--axiom-border);
   border-radius: 8px;
   padding: 0.5rem 0.8rem;
-  background-color: var(--axiom-surface);
+  background: var(--axiom-surface-grad);
+  box-shadow: var(--axiom-shadow);
   font-size: 0.9rem;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.axiom-memory-row:hover {
+  border-color: var(--axiom-accent);
+  box-shadow: var(--axiom-shadow), 0 0 14px var(--axiom-glow);
 }
 
 .axiom-automations-row {
@@ -346,4 +400,213 @@ input {
 .axiom-automations-error {
   color: var(--axiom-error);
   font-size: 0.85rem;
+}
+
+/* ---- AXIOM pet: axolotl mascot ---- */
+
+.axiom-axolotl {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--axiom-border-subtle);
+}
+
+.axiom-axolotl-svg {
+  width: 84px;
+  height: 70px;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px var(--axiom-glow));
+  animation: axiom-axolotl-bob 3.2s ease-in-out infinite;
+  transition: filter 0.3s ease;
+}
+
+.axiom-axolotl-shadow {
+  fill: rgba(0, 0, 0, 0.35);
+}
+
+.axiom-axolotl-tail,
+.axiom-axolotl-body {
+  fill: var(--axiom-accent);
+}
+
+.axiom-axolotl-belly {
+  fill: var(--axiom-surface-alt);
+  opacity: 0.55;
+}
+
+.axiom-axolotl-leg {
+  fill: var(--axiom-accent-soft);
+  opacity: 0.85;
+}
+
+.axiom-axolotl-blush {
+  fill: var(--axiom-glow-error);
+}
+
+.axiom-axolotl-gill path {
+  fill: none;
+  stroke: var(--axiom-accent-soft);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform-origin: center;
+}
+
+.axiom-axolotl-gill-left {
+  animation: axiom-axolotl-gill-wiggle-left 2.4s ease-in-out infinite;
+}
+
+.axiom-axolotl-gill-right {
+  animation: axiom-axolotl-gill-wiggle-right 2.4s ease-in-out infinite;
+}
+
+.axiom-axolotl-eye {
+  fill: var(--axiom-bg);
+}
+
+.axiom-axolotl-eyes-happy,
+.axiom-axolotl-eyes-concerned {
+  display: none;
+}
+
+.axiom-axolotl-eyes-happy path,
+.axiom-axolotl-eyes-concerned path {
+  fill: none;
+  stroke: var(--axiom-bg);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.axiom-axolotl-mouth-default,
+.axiom-axolotl-mouth-happy,
+.axiom-axolotl-mouth-concerned {
+  fill: none;
+  stroke: var(--axiom-bg);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.axiom-axolotl-mouth-happy,
+.axiom-axolotl-mouth-concerned {
+  display: none;
+}
+
+.axiom-axolotl-mouth-concerned {
+  fill: var(--axiom-bg);
+  stroke: none;
+}
+
+/* eyes blink periodically regardless of mood */
+.axiom-axolotl-eyes-default {
+  animation: axiom-axolotl-blink 5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* -- mood: thinking -- gills wiggle faster, stronger glow pulse */
+.axiom-axolotl[data-mood="thinking"] .axiom-axolotl-svg {
+  animation-duration: 1.4s;
+  filter: drop-shadow(0 0 14px var(--axiom-glow-strong));
+}
+
+.axiom-axolotl[data-mood="thinking"] .axiom-axolotl-gill-left,
+.axiom-axolotl[data-mood="thinking"] .axiom-axolotl-gill-right {
+  animation-duration: 0.9s;
+}
+
+/* -- mood: happy -- bright glow, big smile, curved eyes, little hop */
+.axiom-axolotl[data-mood="happy"] .axiom-axolotl-svg {
+  filter: drop-shadow(0 0 18px var(--axiom-glow-strong));
+  animation: axiom-axolotl-hop 0.5s ease-in-out 2;
+}
+
+.axiom-axolotl[data-mood="happy"] .axiom-axolotl-eyes-default,
+.axiom-axolotl[data-mood="happy"] .axiom-axolotl-mouth-default {
+  display: none;
+}
+
+.axiom-axolotl[data-mood="happy"] .axiom-axolotl-eyes-happy,
+.axiom-axolotl[data-mood="happy"] .axiom-axolotl-mouth-happy {
+  display: block;
+}
+
+/* -- mood: concerned -- red-tinted glow, worried eyes, small o mouth */
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-svg {
+  filter: drop-shadow(0 0 14px var(--axiom-glow-error));
+  animation: axiom-axolotl-droop 0.4s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-eyes-default,
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-mouth-default {
+  display: none;
+}
+
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-eyes-concerned,
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-mouth-concerned {
+  display: block;
+}
+
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-body,
+.axiom-axolotl[data-mood="concerned"] .axiom-axolotl-tail {
+  fill: color-mix(in srgb, var(--axiom-accent) 75%, var(--axiom-error) 25%);
+}
+
+@keyframes axiom-axolotl-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes axiom-axolotl-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes axiom-axolotl-droop {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes axiom-axolotl-gill-wiggle-left {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes axiom-axolotl-gill-wiggle-right {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes axiom-axolotl-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
 }

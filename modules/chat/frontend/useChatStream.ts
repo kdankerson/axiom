@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { petBus } from "../../../src/core/petBus";
 import { sidecarWsUrl } from "../../../src/core/sidecarClient";
 
 export interface ChatMessage {
@@ -35,6 +36,7 @@ export function useChatStream() {
       setError(null);
       setMessages((prev) => [...prev, { role: "user", text }, { role: "assistant", text: "" }]);
       setStreaming(true);
+      petBus.setMood("thinking");
 
       let ws: WebSocket;
       try {
@@ -42,6 +44,7 @@ export function useChatStream() {
       } catch (err) {
         setError((err as Error).message);
         setStreaming(false);
+        petBus.setMood("concerned");
         return;
       }
 
@@ -56,10 +59,12 @@ export function useChatStream() {
           });
         } else if (payload.type === "done") {
           setStreaming(false);
+          petBus.setMood("happy");
           ws.removeEventListener("message", onMessage);
         } else if (payload.type === "error") {
           setError(payload.message);
           setStreaming(false);
+          petBus.setMood("concerned");
           ws.removeEventListener("message", onMessage);
         }
       };

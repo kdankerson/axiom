@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { petBus } from "../../../src/core/petBus";
 import { sidecarWsUrl } from "../../../src/core/sidecarClient";
 
 export interface AgentEvent {
@@ -14,6 +15,8 @@ export function useAgentStream() {
   const run = useCallback(async (task: string) => {
     setEvents([]);
     setRunning(true);
+    petBus.setMood("thinking");
+    let hadError = false;
 
     const url = await sidecarWsUrl("/api/agents/run");
     const ws = new WebSocket(url);
@@ -26,14 +29,19 @@ export function useAgentStream() {
       const payload = JSON.parse(event.data);
       if (payload.type === "run_complete") {
         setRunning(false);
+        petBus.setMood(hadError ? "concerned" : "happy");
         ws.close();
         return;
+      }
+      if (payload.type === "error" || (payload.type === "result" && payload.is_error)) {
+        hadError = true;
       }
       setEvents((prev) => [...prev, payload]);
     });
     ws.addEventListener("error", () => {
       setEvents((prev) => [...prev, { type: "error", message: "WebSocket connection failed" }]);
       setRunning(false);
+      petBus.setMood("concerned");
     });
     ws.addEventListener("close", () => {
       setRunning(false);
