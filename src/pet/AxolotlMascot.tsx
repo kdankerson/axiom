@@ -1,53 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { petBus } from "../core/petBus";
-import type { PetMood } from "../core/petBus";
+import { usePetMood } from "./usePetMood";
 
-const PULSE_MS = 2000;
-
-export function AxolotlMascot() {
-  const [mood, setMood] = useState<PetMood>("idle");
-  const revertTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Tracks whether a stream is currently active so a happy/concerned pulse
-  // reverts to "thinking" instead of "idle" if the pet gets a new signal
-  // mid-pulse while a run is still going.
-  const activeStream = useRef(false);
-
-  useEffect(() => {
-    function onMood(e: Event) {
-      const next = (e as CustomEvent<PetMood>).detail;
-      if (revertTimer.current) {
-        clearTimeout(revertTimer.current);
-        revertTimer.current = null;
-      }
-
-      if (next === "thinking") {
-        activeStream.current = true;
-        setMood("thinking");
-        return;
-      }
-      if (next === "idle") {
-        activeStream.current = false;
-        setMood("idle");
-        return;
-      }
-
-      // happy / concerned are transient pulses
-      activeStream.current = false;
-      setMood(next);
-      revertTimer.current = setTimeout(() => {
-        setMood(activeStream.current ? "thinking" : "idle");
-      }, PULSE_MS);
-    }
-
-    petBus.addEventListener("mood", onMood);
-    return () => {
-      petBus.removeEventListener("mood", onMood);
-      if (revertTimer.current) clearTimeout(revertTimer.current);
-    };
-  }, []);
+export function AxolotlMascot({ size = "lg" }: { size?: "sm" | "lg" }) {
+  const mood = usePetMood();
 
   return (
-    <div className="axiom-axolotl" data-mood={mood} title="AXIOM">
+    <div className={`axiom-axolotl axiom-axolotl-${size}`} data-mood={mood} title="AXIOM">
       <svg viewBox="0 0 120 100" className="axiom-axolotl-svg" aria-hidden="true">
         <ellipse className="axiom-axolotl-shadow" cx="60" cy="88" rx="30" ry="5" />
 

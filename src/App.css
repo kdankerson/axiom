@@ -69,12 +69,20 @@ body {
   flex-direction: column;
 }
 
+.axiom-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--axiom-border-subtle);
+}
+
 .axiom-sidebar-brand {
   font-weight: 600;
   letter-spacing: 0.2em;
   color: var(--axiom-accent);
   text-shadow: 0 0 12px var(--axiom-glow);
-  margin-bottom: 1rem;
 }
 
 .axiom-nav-slot {
@@ -407,18 +415,26 @@ input:focus {
 .axiom-axolotl {
   display: flex;
   justify-content: center;
-  padding: 0.5rem 0 1rem;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid var(--axiom-border-subtle);
+  line-height: 0;
 }
 
 .axiom-axolotl-svg {
-  width: 84px;
-  height: 70px;
   overflow: visible;
   filter: drop-shadow(0 0 10px var(--axiom-glow));
   animation: axiom-axolotl-bob 3.2s ease-in-out infinite;
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, width 0.2s ease, height 0.2s ease;
+}
+
+/* Small: compact icon next to the sidebar brand text */
+.axiom-axolotl-sm .axiom-axolotl-svg {
+  width: 30px;
+  height: 25px;
+}
+
+/* Large: close-up view on the Pet page */
+.axiom-axolotl-lg .axiom-axolotl-svg {
+  width: 220px;
+  height: 184px;
 }
 
 .axiom-axolotl-shadow {
@@ -609,4 +625,44 @@ input:focus {
   96% {
     transform: scaleY(0.1);
   }
+}
+
+/* ---- Pet page: close-up view ---- */
+
+.axiom-pet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 1.5rem;
+}
+
+.axiom-pet-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(77, 208, 225, 0.1) 0%, transparent 70%);
+  margin: 1.5rem 0;
+}
+
+.axiom-pet-mood {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--axiom-accent);
+  text-shadow: 0 0 12px var(--axiom-glow);
+}
+
+.axiom-pet-mood[data-mood="concerned"] {
+  color: var(--axiom-error);
+  text-shadow: 0 0 12px var(--axiom-glow-error);
+}
+
+.axiom-pet-blurb {
+  color: var(--axiom-text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
 }

@@ -1,0 +1,10 @@
+{
+  "id": "pet",
+  "name": "Pet",
+  "icon": "sparkles",
+  "route": "/pet",
+  "version": "0.1.0",
+  "frontend": { "entry": "frontend/index.tsx" },
+  "nav": { "order": 8, "placeholder": false, "enabled": true },
+  "capabilities": []
+}
