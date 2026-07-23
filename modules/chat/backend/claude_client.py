@@ -3,8 +3,20 @@ from collections.abc import AsyncIterator
 from core.claude_cli import stream_query
 
 
-async def stream_reply(message: str) -> AsyncIterator[str]:
-    async for event in stream_query(message, include_partial_messages=True):
+async def stream_reply(
+    message: str,
+    *,
+    session_id: str,
+    resume: bool,
+    append_system_prompt: str | None = None,
+) -> AsyncIterator[str]:
+    async for event in stream_query(
+        message,
+        include_partial_messages=True,
+        session_id=session_id,
+        resume=resume,
+        append_system_prompt=append_system_prompt if not resume else None,
+    ):
         if event.get("type") != "stream_event":
             continue
         inner = event.get("event", {})

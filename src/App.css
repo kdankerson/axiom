@@ -227,3 +227,123 @@ input {
 .axiom-agents-error {
   color: var(--axiom-error);
 }
+
+.axiom-memory-tabs,
+.axiom-automations-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.axiom-automations-form {
+  flex-wrap: wrap;
+}
+
+.axiom-automations-form input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.axiom-tab-active {
+  border-color: var(--axiom-accent);
+  color: var(--axiom-accent);
+}
+
+.axiom-memory-history {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.axiom-memory-empty {
+  color: var(--axiom-text-muted);
+  font-size: 0.9rem;
+}
+
+.axiom-memory-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.axiom-memory-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--axiom-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  background-color: var(--axiom-surface);
+  font-size: 0.9rem;
+}
+
+.axiom-automations-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.axiom-automations-row .axiom-memory-row {
+  flex: 1;
+}
+
+.axiom-memory-row-meta {
+  color: var(--axiom-text-muted);
+  font-size: 0.8rem;
+}
+
+.axiom-memory-detail {
+  border-left: 2px solid var(--axiom-border);
+  margin: 0.3rem 0 0.6rem 0.5rem;
+  padding: 0.5rem 0 0.5rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.axiom-memory-msg {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.axiom-memory-msg-assistant {
+  color: var(--axiom-text-muted);
+}
+
+.axiom-memory-log {
+  white-space: pre-wrap;
+  font-size: 0.78rem;
+  color: var(--axiom-text-muted);
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.axiom-memory-status {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.axiom-memory-status-ok {
+  color: var(--axiom-accent);
+}
+
+.axiom-memory-status-error {
+  color: var(--axiom-error);
+}
+
+.axiom-memory-status-running {
+  color: var(--axiom-text-muted);
+}
+
+.axiom-automations-error {
+  color: var(--axiom-error);
+  font-size: 0.85rem;
+}

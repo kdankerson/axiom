@@ -13,12 +13,20 @@ async def stream_query(
     *,
     include_partial_messages: bool = False,
     cwd: str | None = None,
+    session_id: str | None = None,
+    resume: bool = False,
+    append_system_prompt: str | None = None,
 ) -> AsyncIterator[dict]:
     """Shell out to the local `claude` CLI and yield its stream-json events.
 
     Deliberately omits --bare so the call rides the caller's own `claude
     login` session (same credentials as interactive Claude Code) instead of
     requiring a separate ANTHROPIC_API_KEY.
+
+    `session_id` + `resume` give a caller multi-turn continuity: pass
+    `session_id` alone on the first call of a conversation to name the
+    session, then pass the same `session_id` with `resume=True` on every
+    later call so the CLI has the prior turns as context.
     """
     claude_path = shutil.which("claude")
     if not claude_path:
@@ -30,6 +38,12 @@ async def stream_query(
     args = [claude_path, "-p", prompt, "--output-format", "stream-json", "--verbose"]
     if include_partial_messages:
         args.append("--include-partial-messages")
+    if session_id and resume:
+        args += ["--resume", session_id]
+    elif session_id:
+        args += ["--session-id", session_id]
+    if append_system_prompt:
+        args += ["--append-system-prompt", append_system_prompt]
 
     proc = await asyncio.create_subprocess_exec(
         *args,

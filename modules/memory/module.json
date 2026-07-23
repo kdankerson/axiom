@@ -2,7 +2,10 @@
   "id": "memory",
   "name": "Memory",
   "icon": "database",
+  "route": "/memory",
   "version": "0.1.0",
-  "nav": { "order": 90, "placeholder": true, "enabled": false },
-  "note": "Coming soon"
+  "frontend": { "entry": "frontend/index.tsx" },
+  "backend": { "enabled": true, "router": "backend/router.py", "prefix": "/api/memory" },
+  "nav": { "order": 90, "placeholder": false, "enabled": true },
+  "capabilities": []
 }

@@ -5,9 +5,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from core.db import init_db
 from core.module_loader import discover_and_mount
 
 app = FastAPI(title="AXIOM Sidecar")
+
+init_db()
 
 # The frontend runs on a different origin than the sidecar (Vite dev server in
 # dev, the tauri:// webview origin in production) — both are local-only, so a

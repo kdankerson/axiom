@@ -2,7 +2,10 @@
   "id": "automations",
   "name": "Automations",
   "icon": "workflow",
+  "route": "/automations",
   "version": "0.1.0",
-  "nav": { "order": 95, "placeholder": true, "enabled": false },
-  "note": "Coming soon"
+  "frontend": { "entry": "frontend/index.tsx" },
+  "backend": { "enabled": true, "router": "backend/router.py", "prefix": "/api/automations" },
+  "nav": { "order": 95, "placeholder": false, "enabled": true },
+  "capabilities": ["scheduling"]
 }

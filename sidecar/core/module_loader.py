@@ -32,4 +32,13 @@ def discover_and_mount(app: FastAPI) -> list[dict]:
         prefix = backend.get("prefix", f"/api/{manifest['id']}")
         app.include_router(mod.router, prefix=prefix, tags=[manifest["id"]])
 
+        # Optional convention: a module's router.py may expose an async
+        # start() for background work (schedulers, pollers). Registered as a
+        # FastAPI startup handler rather than called here directly — at this
+        # point (import time, before uvicorn.run()) there's no running event
+        # loop yet, so anything that does asyncio.create_task() would attach
+        # to the wrong loop and silently never run.
+        if hasattr(mod, "start"):
+            app.router.add_event_handler("startup", mod.start)
+
     return manifests
