@@ -49,3 +49,27 @@ def list_runs(limit: int = 100, automation_id: int | None = None) -> list[dict]:
 def get_run(run_id: str) -> dict | None:
     row = _db.query_one("SELECT * FROM runs WHERE id = ?", (run_id,))
     return dict(row) if row else None
+
+
+def list_active_runs(source: str | None = None) -> list[dict]:
+    if source is not None:
+        rows = _db.query(
+            "SELECT id, source, automation_id, task, cwd, status, started_at "
+            "FROM runs WHERE status = 'running' AND source = ? ORDER BY started_at DESC",
+            (source,),
+        )
+    else:
+        rows = _db.query(
+            "SELECT id, source, automation_id, task, cwd, status, started_at "
+            "FROM runs WHERE status = 'running' ORDER BY started_at DESC"
+        )
+    return [dict(r) for r in rows]
+
+
+def mark_stale_running_as_interrupted() -> None:
+    # Any row still 'running' at process start means the sidecar died mid-run
+    # last time — nothing is actually executing it anymore, so it would sit
+    # as a permanently "active" ghost otherwise.
+    _db.execute(
+        "UPDATE runs SET status = 'error', finished_at = datetime('now') WHERE status = 'running'"
+    )

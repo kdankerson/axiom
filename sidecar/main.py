@@ -7,10 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.db import init_db
 from core.module_loader import discover_and_mount
+from core.runs_store import mark_stale_running_as_interrupted
 
 app = FastAPI(title="AXIOM Sidecar")
 
 init_db()
+mark_stale_running_as_interrupted()
 
 # The frontend runs on a different origin than the sidecar (Vite dev server in
 # dev, the tauri:// webview origin in production) — both are local-only, so a

@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { petBus } from "../core/petBus";
 import type { PetMood } from "../core/petBus";
 
-const PULSE_MS = 2000;
+// Exported so other sources of "happy"/"concerned" pulses that know they're
+// still active underneath (e.g. multiple concurrent agents) can re-assert
+// "thinking" just after a pulse would otherwise revert to idle.
+export const PULSE_MS = 2000;
 
 // Each caller (sidebar icon, Pet page) subscribes independently and computes
 // the same value off the same bus events — no need to lift this into shared

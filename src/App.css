@@ -114,6 +114,98 @@ body {
   cursor: default;
 }
 
+.axiom-agent-roster {
+  margin: 0.1rem 0 0.5rem 0.6rem;
+  padding-left: 0.6rem;
+  border-left: 1px solid var(--axiom-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.axiom-agent-roster-heading {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--axiom-text-disabled);
+  margin: 0.2rem 0 0.15rem;
+}
+
+.axiom-agent-roster-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+  color: var(--axiom-text-muted);
+  font-size: 0.8rem;
+}
+
+.axiom-agent-roster-item:hover {
+  background-color: var(--axiom-surface-alt);
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--axiom-text);
+}
+
+.axiom-agent-roster-task {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.axiom-agent-roster-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.axiom-agent-roster-item-running .axiom-agent-roster-dot {
+  background: var(--axiom-accent);
+  box-shadow: 0 0 6px var(--axiom-glow-strong);
+  animation: axiom-agent-roster-pulse 1.4s ease-in-out infinite;
+}
+
+.axiom-agent-roster-item-ok .axiom-agent-roster-dot {
+  background: var(--axiom-accent-soft);
+  opacity: 0.6;
+}
+
+.axiom-agent-roster-item-error .axiom-agent-roster-dot {
+  background: var(--axiom-error);
+  opacity: 0.7;
+}
+
+@keyframes axiom-agent-roster-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.axiom-agent-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.axiom-agent-detail-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
 .axiom-main {
   flex: 1;
   padding: 2rem;

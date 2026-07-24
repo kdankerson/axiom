@@ -1,5 +1,5 @@
-import { AgentRunner } from "./AgentRunner";
+import { AgentsPage } from "./AgentsPage";
 
 export default function AgentsModule() {
-  return <AgentRunner />;
+  return <AgentsPage />;
 }
